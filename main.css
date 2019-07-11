@@ -1,0 +1,37 @@
+body {
+  background-color: #222222;
+  color: white;
+  font-weight: bold;
+}
+
+h1 {
+  margin-top: 15px;
+}
+
+h1, h3 {
+  font-weight: bold;
+}
+
+#userData {
+  padding: 5px;
+  margin-top: 25px;
+  font-size: 1.2em;
+
+}
+
+#userWeight {
+  color: black;
+  text-align: center;
+  background-color: white;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 0.9em;
+}
+
+#userWeight:focus {
+  outline: none;
+}
+
+.genderInput {
+  color: #000000;
+}
