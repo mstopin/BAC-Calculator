@@ -13,18 +13,43 @@
   <h3> Calculate your BAC level easily </h3>
   <div id = "userData">
     <span style = "margin-right: 5px"> Your weight [kg]: </span>
-    <input type = "number" min = "1" id = "userWeight" value = "75">
+    <input type = "number" min = "1" id = "userWeight" class = "userInput" value = "75">
     <br/>
-    <div style = "margin-top: 15px; margin-right: 5px"> Your gender: </div>
+    <div style = "margin-top: 15px"> Your gender: </div>
     <input type = "radio" name = "gender" id = "male" checked> Male
     <br/>
     <input type = "radio" name = "gender" id = "female"> Female
   </div>
-  <div id = "alcoholList">
+  <div class = "container w-75" id = "addAlcohol">
+  <h3> Add alcohol: </h3>
+  <div class = "row">
+    <div class = "col-md">
+      <p> Volume[ml]: </p>
+      <input type = "number" class = "userInput" min = "1">
+    </div>
+    <div class = "col-md">
+      <p> Alcohol amount[%]: </p>
+      <input type = "number" class = "userInput" min = "1">
+    </div>
+    <div class = "col-md" style = "padding: 15px; height: 100%; margin-top: auto; margin-bottom: auto">
+      <button id = "addButton"> Add alcohol </button>
+    </div>
+  </div>
+  <h3 style = "margin-top: 15px"> Alcohol list: </h3>
+  <table class = "table table-striped table-bordered">
+    <thead>
+      <th> # </th>
+      <th> Volume[ml] </th>
+      <th> Alcohol amount[%] </th>
+    </thead>
+    <tbody id = "alcoholList">
+    </tbody>
+  </table>
   </div>
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src = "main.js"></script>
 </html>

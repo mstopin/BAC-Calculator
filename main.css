@@ -12,26 +12,45 @@ h1, h3 {
   font-weight: bold;
 }
 
-#userData {
+.userInput {
   padding: 5px;
-  margin-top: 25px;
-  font-size: 1.2em;
-
+  font-size: 1em;
+  border-radius: 10px;
+  font-size: 0.9em;
+  text-align: center;
+  padding: 5px;
 }
 
 #userWeight {
-  color: black;
-  text-align: center;
-  background-color: white;
-  padding: 5px;
-  border-radius: 10px;
-  font-size: 0.9em;
+  margin-top: 25px;
 }
 
-#userWeight:focus {
+.userInput:focus {
   outline: none;
 }
 
-.genderInput {
-  color: #000000;
+#addAlcohol p {
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+#addAlcohol {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #383838;
+}
+
+#addButton {
+  border: none;
+  font-weight: bold;
+  font-size: 1.3em;
+  transition: ease-in-out 0.1s;
+}
+
+#addButton:active {
+  background-color: #828282;
+}
+
+table {
+  background-color: white;
 }
