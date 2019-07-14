@@ -76,7 +76,7 @@ function calculateBAC() {
   $('#alcoholIngestedML').html(roundNumber(totalAlcoholML));
   $('#alcoholIngestedG').html(roundNumber(totalAlcoholG));
   $('#BAC').html(roundNumber(userBAC));
-  $('#soberIn').html(soberingTime.h + " hour(s) " + soberingTime.m + "minute(s)");
+  $('#soberIn').html(soberingTime.h + " hour(s) " + soberingTime.m + " minute(s)");
 }
 
 function setResultsDisplay() {
