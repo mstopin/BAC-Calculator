@@ -23,7 +23,7 @@
     <input type = "radio" name = "gender" id = "female"> Female
     <br/>
     <span style = "display: inline-block; margin-top: 15px; margin-right: 5px; margin-bottom: 5px;"> Drinking time [h]: </span>
-    <input type = "number" id = "timeDrinking" class = "userInput" value = "0">
+    <input type = "number" min = "0" id = "timeDrinking" class = "userInput" value = "0">
   </div>
   <div id = "addAlcohol">
   <h3> Add alcohol: </h3>
@@ -47,19 +47,19 @@
   <div id = "results">
     <h3> Results: </h3>
     <div class = "row">
-      <div class = "col-sm alcoholBox">
+      <div class = "col-sm box">
         <p> Alcohol ingested [ml]: </p>
         <p id = "alcoholIngestedML"></p>
       </div>
-      <div class = "col-sm alcoholBox">
+      <div class = "col-sm box">
         <p> Alcohol ingested [g]: </p>
         <p id = "alcoholIngestedG"></p>
       </div>
-      <div class = "col-sm alcoholBox">
+      <div class = "col-sm box">
         <p> Your BAC: </p>
         <p id = "BAC" style = "color:red"></p>
       </div>
-      <div class = "col-sm alcoholBox">
+      <div class = "col-sm box">
         <p> Sober in: </p>
         <p id = "soberIn"></p>
       </div>

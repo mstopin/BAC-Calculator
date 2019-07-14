@@ -51,7 +51,7 @@ h1, h3 {
   background-color: #828282;
 }
 
-#alcoholList {
+#alcoholList .box {
   padding: 10px;
 }
 
@@ -60,7 +60,7 @@ h1, h3 {
   margin-left: auto;
 }
 
-.alcoholBox {
+.box {
   color: black;
   background-color: #cfcfcf;
   padding: 5px;
@@ -75,6 +75,11 @@ h1, h3 {
 .trashIcon:hover {
   cursor: pointer;
   opacity: 1;
+}
+
+.trashIcon:active {
+  opacity: 1;
+  color: red;
 }
 
 #results {

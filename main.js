@@ -7,21 +7,20 @@ var alcoholMetabolism = 0.15;
 $(document).ready(() => {
   $('#addButton').click(addAlcohol);
   $(document).on('click', '.trashIcon', (event) => {
-    console.log(event.currentTarget.id - 1);
     alcoholArray.splice(event.currentTarget.id - 1, 1);
     setAlcoholList();
     calculateBAC();
   });
   $('#userWeight').on('input', () => {
-    if(isCorrectInput($('#userWeight').val()) && (isCorrectInput($('#timeDrinking').val()))) calculateBAC();
+    calculateBAC();
     setResultsDisplay();
   });
   $('#timeDrinking').on('input', () => {
-    if(isCorrectInput($('#userWeight').val()) && (isCorrectInput($('#timeDrinking').val()))) calculateBAC();
+    calculateBAC();
     setResultsDisplay();
   });
   $('input[type=radio][name=gender]').change(() => {
-    if (isCorrectInput($('#userWeight').val())) calculateBAC();
+    calculateBAC();
   });
 });
 
@@ -51,7 +50,7 @@ function isCorrectInput(input) {
 function setAlcoholList() {
   var output = "<div class = \"row\">";
   for(var i = 1; i <= alcoholArray.length; i++) {
-    output += "<div class = \"col-sm alcoholBox\"> <p> " + i +".</p><p> Volume[ml]: " + alcoholArray[i - 1].drinkVolume + "</p>";
+    output += "<div class = \"col-sm box\"> <p> " + i +".</p><p> Volume[ml]: " + alcoholArray[i - 1].drinkVolume + "</p>";
     output += "<p> Alcohol content [%]: " + alcoholArray[i - 1].alcoholContent + "</p>";
     output += "<p> Amount of alcohol [ml]: " + alcoholArray[i - 1].alcoholAmountML + "</p>";
     output += "<p> Amount of alcohol [g]: " + alcoholArray[i - 1].alcoholAmountG + "</p><i class=\"material-icons trashIcon\" id = \"" + i + "\">delete</i></div>";
@@ -64,6 +63,8 @@ function setAlcoholList() {
 
 function calculateBAC() {
   if (alcoholArray.length <= 0) return;
+  if (!isCorrectInput($('#userWeight').val()) || !isCorrectInput($('#timeDrinking').val())) return;
+  if (parseFloat($('#userWeight').val()) <= 0) return;
   var totalAlcoholML = 0;
   for(var i = 0; i < alcoholArray.length; i++) totalAlcoholML += alcoholArray[i].alcoholAmountML;
   var totalAlcoholG = totalAlcoholML * alcoholDensity;
@@ -79,7 +80,8 @@ function calculateBAC() {
 }
 
 function setResultsDisplay() {
-  if (alcoholArray.length >= 1 && isCorrectInput($('#userWeight').val()) && isCorrectInput($('#timeDrinking').val())) $('#results').css("display", "block");
+  if (alcoholArray.length >= 1 && isCorrectInput($('#userWeight').val()) && isCorrectInput($('#timeDrinking').val()) &&
+  parseFloat($('#userWeight').val()) > 0) $('#results').css("display", "block");
   else $('#results').css("display", "none");
 }
 
