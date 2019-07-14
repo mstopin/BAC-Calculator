@@ -1,52 +1,76 @@
 <!doctype html>
+<!--- "BAC Calculator" by mstopin | https://github.com/mstopin-->
 <html>
 <head>
 <meta charset = "utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="main.css">
 <title> BAC Calculator </title>
 </head>
 <body>
-<div class = "container text-center">
+<div class = "container-fluid text-center">
   <h1> BAC Calculator </h1>
   <h3> Calculate your BAC level easily </h3>
   <div id = "userData">
-    <span style = "margin-right: 5px"> Your weight [kg]: </span>
+    <span style = "display: inline-block; margin-top: 15px; margin-right: 5px; margin-bottom: 5px;"> Your weight [kg]: </span>
     <input type = "number" min = "1" id = "userWeight" class = "userInput" value = "75">
     <br/>
-    <div style = "margin-top: 15px"> Your gender: </div>
+    <div style = "margin-top: 5px"> Your gender: </div>
     <input type = "radio" name = "gender" id = "male" checked> Male
     <br/>
     <input type = "radio" name = "gender" id = "female"> Female
+    <br/>
+    <span style = "display: inline-block; margin-top: 15px; margin-right: 5px; margin-bottom: 5px;"> Drinking time [h]: </span>
+    <input type = "number" id = "timeDrinking" class = "userInput" value = "0">
   </div>
-  <div class = "container w-75" id = "addAlcohol">
+  <div id = "addAlcohol">
   <h3> Add alcohol: </h3>
   <div class = "row">
     <div class = "col-md">
       <p> Volume[ml]: </p>
-      <input type = "number" class = "userInput" min = "1">
+      <input type = "number" class = "userInput" id = "drinkVolume" min = "1">
     </div>
     <div class = "col-md">
-      <p> Alcohol amount[%]: </p>
-      <input type = "number" class = "userInput" min = "1">
+      <p> Alcohol content[%]: </p>
+      <input type = "number" class = "userInput" id = "alcoholContent" min = "1">
     </div>
     <div class = "col-md" style = "padding: 15px; height: 100%; margin-top: auto; margin-bottom: auto">
       <button id = "addButton"> Add alcohol </button>
     </div>
   </div>
+  <div class="alert alert-warning" role="alert" id = "invalidDataWarning" style = "margin-top: 15px;"> Invalid data </div>
   <h3 style = "margin-top: 15px"> Alcohol list: </h3>
-  <table class = "table table-striped table-bordered">
-    <thead>
-      <th> # </th>
-      <th> Volume[ml] </th>
-      <th> Alcohol amount[%] </th>
-    </thead>
-    <tbody id = "alcoholList">
-    </tbody>
-  </table>
+  <div id = "alcoholList">
+  </div>
+  <div id = "results">
+    <h3> Results: </h3>
+    <div class = "row">
+      <div class = "col-sm alcoholBox">
+        <p> Alcohol ingested [ml]: </p>
+        <p id = "alcoholIngestedML"></p>
+      </div>
+      <div class = "col-sm alcoholBox">
+        <p> Alcohol ingested [g]: </p>
+        <p id = "alcoholIngestedG"></p>
+      </div>
+      <div class = "col-sm alcoholBox">
+        <p> Your BAC: </p>
+        <p id = "BAC" style = "color:red"></p>
+      </div>
+      <div class = "col-sm alcoholBox">
+        <p> Sober in: </p>
+        <p id = "soberIn"></p>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
+<footer class = "text-center">
+<p class = "lead" style = "font-size: 0.9em"> Disclaimer! This BAC level calculator is for educational purposes only. Calculations are estimated and cannot fully determine your real BAC level due to factors not taken under consideration e.g. eaten food. For accurate measurements please use a breathalyzer or take a blood test. Do not drive after drinking! </p>
+<p style = "font-size: 0.9em"> Made with <span style = "color:#e25555;">❤</span> by <a href = "https://github.com/mstopin" target = "_blank"> mstopin </a> </p>
+</footer>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
