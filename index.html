@@ -24,7 +24,7 @@
   <h1> BAC Calculator </h1>
   <h3> Calculate your BAC level easily </h3>
   <div id = "userData">
-    <span style = "display: inline-block; margin-top: 15px; margin-right: 5px; margin-bottom: 5px;"> Your weight [kg]: </span>
+    <span style = "display: inline-block; margin-top: 15px; margin-right: 5px; margin-bottom: 5px;" id = "weightP"> Your weight [kg]: </span>
     <input type = "number" min = "1" id = "userWeight" class = "userInput" value = "75">
     <br/>
     <div style = "margin-top: 5px"> Your gender: </div>
@@ -35,11 +35,22 @@
     <span style = "display: inline-block; margin-top: 15px; margin-right: 5px; margin-bottom: 5px;"> Drinking time [h]: </span>
     <input type = "number" min = "0" id = "timeDrinking" class = "userInput" value = "0">
   </div>
+  <div style = "margin-top: 15px;">
+    <button type = "button" class = "btn btn-secondary" id = "toggleSettings"> Settings ▼ </button>
+    <div id = "settings">
+      <span> Mass unit: </span> <br/>
+      <input type = "radio" name = "weight" id = "kgUnit" checked> kg <br/>
+      <input type = "radio" name = "weight" id = "lbUnit"> lb <br/>
+      <span> Volume unit: </span> <br/>
+      <input type = "radio" name = "volume" id = "mlUnit" checked> ml <br/>
+      <input type = "radio" name = "volume" id = "ozUnit"> fl. oz. (US)<br/>
+    </div>
+  </div>
   <div id = "addAlcohol">
   <h3> Add alcohol: </h3>
   <div class = "row">
     <div class = "col-md">
-      <p> Volume[ml]: </p>
+      <p id = "volumeP"> Volume[ml]: </p>
       <input type = "number" class = "userInput" id = "drinkVolume" min = "1">
     </div>
     <div class = "col-md">
@@ -58,12 +69,12 @@
     <h3> Results: </h3>
     <div class = "row">
       <div class = "col-sm box">
-        <p> Alcohol ingested [ml]: </p>
-        <p id = "alcoholIngestedML"></p>
+        <p id = "ingestedVolumeP"> Alcohol ingested [ml]: </p>
+        <p id = "alcoholIngestedVolume"></p>
       </div>
       <div class = "col-sm box">
-        <p> Alcohol ingested [g]: </p>
-        <p id = "alcoholIngestedG"></p>
+        <p id = "ingestedMassP"> Alcohol ingested [g]: </p>
+        <p id = "alcoholIngestedMass"></p>
       </div>
       <div class = "col-sm box">
         <p> Your BAC: </p>

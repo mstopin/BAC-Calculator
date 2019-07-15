@@ -1,8 +1,13 @@
-var alcoholArray = new Array();
+//const
 var alcoholDensity = 0.79;
 var maleFactor = 0.7;
 var femaleFactor = 0.6;
 var alcoholMetabolism = 0.15;
+//
+var alcoholArray = new Array();
+var currentBAC = null;
+var currentMassUnit = false; //KG -> false, LB -> true
+var currentVolumeUnit = false; //ML -> false, FL OZ -> true
 
 $(document).ready(() => {
   $('#addButton').click(addAlcohol);
@@ -22,6 +27,47 @@ $(document).ready(() => {
   $('input[type=radio][name=gender]').change(() => {
     calculateBAC();
   });
+  $('input[type=radio][name=weight]').change(() => {
+    currentMassUnit = !($('#kgUnit').is(':checked'));
+    if (currentMassUnit) {
+      $('#weightP').html("Your weight [lb]:");
+      $('#ingestedMassP').html("Alcohol ingested [lb]:");
+    }
+    else {
+      $('#weightP').html("Your weight [kg]:");
+      $('#ingestedMassP').html("Alcohol ingested [g]:")
+    }
+    setAlcoholList();
+    calculateBAC();
+  });
+  $('input[type=radio][name=volume]').change(() => {
+    currentVolumeUnit = !($('#mlUnit').is(':checked'));
+    if (currentVolumeUnit) {
+      $('#volumeP').html("Volume[oz]:");
+      $('#ingestedVolumeP').html("Alcohol ingested [oz]:");
+    }
+    else {
+      $('#volumeP').html("Volume[ml]:");
+      $('#ingestedVolumeP').html("Alcohol ingested [ml]:");
+    }
+    setAlcoholList();
+    calculateBAC();
+  });
+  $('#BAC').on('mouseover', () => {
+    $('#BAC').html(roundNumber(currentBAC / 10) + " %");
+  });
+  $('#BAC').on('mouseout', () => {
+    $("#BAC").html(currentBAC + " ‰");
+  });
+  $('#toggleSettings').click(() => {
+      if($('#settings').css("display") == "block") {
+        $('#toggleSettings').html("Settings ▼");
+        $('#settings').css("display", "none");
+      } else {
+      $('#toggleSettings').html("Settings ▲");
+      $('#settings').css("display", "block");
+      }
+    });
 });
 
 function addAlcohol() {
@@ -32,9 +78,10 @@ function addAlcohol() {
     return;
   }
   else if ($('#invalidDataWarning').css("display") == "block") $('#invalidDataWarning').css("display", "none");
-  var alcoholAmount = (alcoholContent / 100) * drinkVolume;
-  alcoholArray.push({drinkVolume: roundNumber(drinkVolume), alcoholContent: roundNumber(alcoholContent), alcoholAmountML: roundNumber(alcoholAmount),
-    alcoholAmountG: roundNumber(alcoholAmount * alcoholDensity)});
+  if (currentVolumeUnit) drinkVolume = ozToML(drinkVolume);
+  var alcoholAmountVolume = (alcoholContent / 100) * drinkVolume;
+  alcoholArray.push({drinkVolume: drinkVolume, alcoholContent: alcoholContent, alcoholAmountVolume: alcoholAmountVolume,
+    alcoholAmountMass: alcoholAmountVolume * alcoholDensity});
   setAlcoholList();
   calculateBAC();
 }
@@ -50,10 +97,13 @@ function isCorrectInput(input) {
 function setAlcoholList() {
   var output = "<div class = \"row\">";
   for(var i = 1; i <= alcoholArray.length; i++) {
-    output += "<div class = \"col-sm box\"> <p> " + i +".</p><p> Volume[ml]: " + alcoholArray[i - 1].drinkVolume + "</p>";
-    output += "<p> Alcohol content [%]: " + alcoholArray[i - 1].alcoholContent + "</p>";
-    output += "<p> Amount of alcohol [ml]: " + alcoholArray[i - 1].alcoholAmountML + "</p>";
-    output += "<p> Amount of alcohol [g]: " + alcoholArray[i - 1].alcoholAmountG + "</p><i class=\"material-icons trashIcon\" id = \"" + i + "\">delete</i></div>";
+    var currentAlcohol = convertAlcoholData(alcoholArray[i - 1]);
+    output += "<div class = \"col-sm box\"> <p> " + i +".</p>";
+    output += "<p> Volume " + ((currentVolumeUnit) ? "[oz]" : "[ml]") + ": " + roundNumber(currentAlcohol.drinkVolume) + "</p>";
+    output += "<p> Alcohol content [%]: " + roundNumber(currentAlcohol.alcoholContent) + "</p>";
+    output += "<p> Amount of alcohol " + ((currentVolumeUnit) ? "[oz]" : "[ml]") + ": " + roundNumber(currentAlcohol.alcoholAmountVolume) + "</p>";
+    output += "<p> Amount of alcohol " + ((currentMassUnit) ? "[lb]" : "[g]") + ": " + roundNumber(currentAlcohol.alcoholAmountMass);
+    output += "</p><i class=\"material-icons trashIcon\" id = \"" + i + "\">delete</i></div>";
     if (!(i % 3)) output += "</div><div class = \"row\">";
   }
   if (alcoholArray.length % 3) output += "</div>";
@@ -65,17 +115,21 @@ function calculateBAC() {
   if (alcoholArray.length <= 0) return;
   if (!isCorrectInput($('#userWeight').val()) || !isCorrectInput($('#timeDrinking').val())) return;
   if (parseFloat($('#userWeight').val()) <= 0) return;
-  var totalAlcoholML = 0;
-  for(var i = 0; i < alcoholArray.length; i++) totalAlcoholML += alcoholArray[i].alcoholAmountML;
-  var totalAlcoholG = totalAlcoholML * alcoholDensity;
+  var totalAlcoholVolume = 0;
+  for(var i = 0; i < alcoholArray.length; i++) totalAlcoholVolume += alcoholArray[i].alcoholAmountVolume;
+  var totalAlcoholMass = totalAlcoholVolume * alcoholDensity;
   var bodyWaterWeight = $('#userWeight').val();
+  if (currentMassUnit) bodyWaterWeight = lbToG(bodyWaterWeight) / 1000;
   bodyWaterWeight *= $('#male').prop('checked') ? maleFactor : femaleFactor;
-  var userBAC = totalAlcoholG / bodyWaterWeight - $('#timeDrinking').val() * alcoholMetabolism;
+  var userBAC = totalAlcoholMass / bodyWaterWeight - $('#timeDrinking').val() * alcoholMetabolism;
   if (userBAC < 0) userBAC = 0;
   var soberingTime = calculateSoberingTime(userBAC);
-  $('#alcoholIngestedML').html(roundNumber(totalAlcoholML));
-  $('#alcoholIngestedG').html(roundNumber(totalAlcoholG));
-  $('#BAC').html(roundNumber(userBAC));
+  currentBAC = roundNumber(userBAC);
+  if (currentMassUnit) totalAlcoholMass = gToLB(totalAlcoholMass);
+  if (currentVolumeUnit) totalAlcoholVolume = mlToOZ(totalAlcoholVolume);
+  $('#alcoholIngestedMass').html(roundNumber(totalAlcoholMass));
+  $('#alcoholIngestedVolume').html(roundNumber(totalAlcoholVolume));
+  $('#BAC').html(currentBAC + " ‰");
   $('#soberIn').html(soberingTime.h + " hour(s) " + soberingTime.m + " minute(s)");
 }
 
@@ -86,10 +140,35 @@ function setResultsDisplay() {
 }
 
 function roundNumber(number) {
-  return Math.floor(number * 1000) / 1000;
+  return Math.floor(number * 10000) / 10000;
 }
 
 function calculateSoberingTime(userBAC) {
   var time = Math.floor((userBAC / alcoholMetabolism) * 60);
   return {h: Math.floor(time / 60), m: time % 60};
+}
+
+function convertAlcoholData(alcohol) {
+  return {
+          drinkVolume: (currentVolumeUnit ? mlToOZ(alcohol.drinkVolume) : alcohol.drinkVolume),
+          alcoholContent: alcohol.alcoholContent,
+          alcoholAmountVolume: (currentVolumeUnit ? mlToOZ(alcohol.alcoholAmountVolume) : alcohol.alcoholAmountVolume),
+          alcoholAmountMass: (currentMassUnit ? gToLB(alcohol.alcoholAmountMass) : alcohol.alcoholAmountMass)
+        };
+}
+
+function ozToML(number) {
+  return number * 30;
+}
+
+function mlToOZ(number) {
+  return number / 30;
+}
+
+function gToLB(number) {
+  return number / 453.59;
+}
+
+function lbToG(number) {
+  return number * 453.59;
 }

@@ -38,16 +38,18 @@ h1, h3 {
   margin-top: 15px;
   padding: 15px;
   background-color: #383838;
+  border-radius: 15px;
 }
 
 #addButton {
-  border: none;
+  border-radius: 10px;
   font-weight: bold;
   font-size: 1.3em;
   transition: ease-in-out 0.1s;
 }
 
 #addButton:active {
+  border-color: #828282;
   background-color: #828282;
 }
 
@@ -93,4 +95,27 @@ h1, h3 {
 footer {
   padding: 25px;
   margin-top: 30px;
+}
+
+#toggleSettings {
+  font-weight: bold;
+  border-color: #383838;
+  background-color: #383838;
+}
+
+#settings {
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  background-color: #383838;
+  border-radius: 15px;
+  display: none;
+  -webkit-animation: fade-in 0.3s;
+}
+
+@-webkit-keyframes fade-in {
+  from { opacity: 0; }
+  to: { opacity: 1; }
 }
