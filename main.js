@@ -68,6 +68,16 @@ $(document).ready(() => {
       $('#settings').css("display", "block");
       }
     });
+  $('#toggleTable').click(() => {
+    if ($('#intoxicationTable').css("display") == "block") {
+      $('#toggleTable').html("Intoxication table ▲");
+      $('#intoxicationTable').css("display", "none");
+    }
+    else {
+      $('#toggleTable').html("Intoxication table ▼");
+      $('#intoxicationTable').css("display", "block");
+    }
+  });
 });
 
 function addAlcohol() {
@@ -131,6 +141,31 @@ function calculateBAC() {
   $('#alcoholIngestedVolume').html(roundNumber(totalAlcoholVolume));
   $('#BAC').html(currentBAC + " ‰");
   $('#soberIn').html(soberingTime.h + " hour(s) " + soberingTime.m + " minute(s)");
+  setIntoxicationTable();
+}
+
+function setIntoxicationTable() {
+  var time = new Date();
+  var currentHour = time.getHours();
+  var currentMinute = time.getMinutes();
+  var bacLevel = currentBAC;
+  var output = "";
+  while(bacLevel >= 0) {
+    var style;
+    if (bacLevel > 0.8) style = "color:red";
+    else if (bacLevel > 0.2) style = "color:#eb9115";
+    else style = "color:#3d7d29";
+    output += "<tr>";
+    output += "<td>" + (currentHour <= 9 ? ("0" + currentHour) : currentHour) + ":" + (currentMinute <= 9 ? ("0" + currentMinute) : currentMinute) + "</td>";
+    output += "<td style = \"" + style + "\">" + roundNumber(bacLevel) + " ‰</td>";
+    output += "</tr>";
+    currentHour++;
+    if (currentHour >= 24) currentHour %= 24;
+    bacLevel -= alcoholMetabolism;
+    if (bacLevel == -1 * alcoholMetabolism) break;
+    if (bacLevel < 0) bacLevel = 0;
+  }
+  $("#intoxicationTableBody").html(output);
 }
 
 function setResultsDisplay() {
