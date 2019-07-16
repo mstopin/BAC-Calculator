@@ -70,11 +70,11 @@ $(document).ready(() => {
     });
   $('#toggleTable').click(() => {
     if ($('#intoxicationTable').css("display") == "block") {
-      $('#toggleTable').html("Intoxication table ▲");
+      $('#toggleTable').html("Intoxication table ▼");
       $('#intoxicationTable').css("display", "none");
     }
     else {
-      $('#toggleTable').html("Intoxication table ▼");
+      $('#toggleTable').html("Intoxication table ▲");
       $('#intoxicationTable').css("display", "block");
     }
   });
