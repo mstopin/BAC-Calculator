@@ -1,3 +1,7 @@
+/*
+  "BAC Calculator" by mstopin | https://github.com/mstopin
+  Do not remove this! 
+*/
 //const
 var alcoholDensity = 0.79;
 var maleFactor = 0.7;
