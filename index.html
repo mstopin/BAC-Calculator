@@ -23,7 +23,7 @@
 <body>
 <div class = "container-fluid text-center">
   <h1> BAC Calculator </h1>
-  <h3> Calculate your BAC level easily </h3>
+  <h4> Estimate your blood alcohol concentration </h4>
   <div id = "userData">
     <span style = "display: inline-block; margin-top: 15px; margin-right: 5px; margin-bottom: 5px;" id = "weightP"> Your weight [kg]: </span>
     <input type = "number" min = "1" id = "userWeight" class = "userInput" value = "75">
@@ -48,7 +48,7 @@
     </div>
   </div>
   <div id = "addAlcohol">
-  <h3> Add alcohol: </h3>
+  <h3> Add drink: </h3>
   <div class = "row">
     <div class = "col-md">
       <p id = "volumeP"> Volume[ml]: </p>
@@ -59,11 +59,11 @@
       <input type = "number" class = "userInput" id = "alcoholContent" min = "1">
     </div>
     <div class = "col-md" style = "padding: 15px; height: 100%; margin-top: auto; margin-bottom: auto">
-      <button id = "addButton"> Add alcohol </button>
+      <button id = "addButton"> Add drink </button>
     </div>
   </div>
   <div class="alert alert-warning" role="alert" id = "invalidDataWarning" style = "margin-top: 15px;"> Invalid data </div>
-  <h3 style = "margin-top: 15px"> Alcohol list: </h3>
+  <h3 style = "margin-top: 15px"> Drink list: </h3>
   <div id = "alcoholList">
   </div>
   <div id = "results">
@@ -92,7 +92,7 @@
         <thead>
           <tr>
             <th>Time:</th>
-            <th>Alcohol level:</th>
+            <th>Alcohol concentration:</th>
           </tr>
         </thead>
         <tbody id = "intoxicationTableBody">
